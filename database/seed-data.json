@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "notes": [
+    {
+      "id": "welcome-note",
+      "title": "Welcome to BUNKER",
+      "content": "Your vault is ready. Add notes here; only your signed-in account can access them.",
+      "tags": ["welcome"]
+    }
+  ]
+}

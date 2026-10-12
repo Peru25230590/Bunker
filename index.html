@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="BUNKER is your private, Firebase-backed personal vault.">
+    <meta name="theme-color" content="#f8f5f2">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebasedatabase.app wss://*.firebasedatabase.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>BUNKER — your personal vault</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html"><span class="brand-icon">B</span><span>BUNKER<small>your personal vault</small></span></a>
+      <nav aria-label="Account navigation">
+        <a href="./login.html" data-guest-only>Sign in</a>
+        <a href="./register.html" class="button button-small" data-guest-only>Create account</a>
+        <button type="button" class="button button-small button-secondary" data-action="sign-out" data-user-only hidden>Sign out</button>
+      </nav>
+    </header>
+    <main class="container">
+      <section class="hero">
+        <p class="eyebrow">A PRIVATE SPACE, JUST FOR YOU</p>
+        <h1>Keep what matters,<br>close at hand.</h1>
+        <p class="lede">Save notes and organize your ideas in a calm, personal vault.</p>
+        <div class="hero-actions" data-guest-only>
+          <a class="button" href="./register.html">Create your account</a>
+          <a class="button button-secondary" href="./login.html">Sign in</a>
+        </div>
+        <p class="account-status" data-user-only hidden></p>
+      </section>
+      <section class="vault" data-user-only hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">YOUR VAULT</p><h2>Your notes</h2></div>
+        </div>
+        <form class="note-form" data-form="new-note">
+          <label for="note-title">Title</label>
+          <input id="note-title" name="title" maxlength="120" required placeholder="A thought to remember">
+          <label for="note-content">Note</label>
+          <textarea id="note-content" name="content" maxlength="10000" rows="4" placeholder="Write something…"></textarea>
+          <button class="button" type="submit">Save note</button>
+        </form>
+        <p class="notice" data-notice role="status"></p>
+        <div class="notes-list" data-notes></div>
+      </section>
+      <section class="privacy-note">
+        <span aria-hidden="true">◇</span>
+        <div><strong>Private by default</strong><p>Your notes are available only to your signed-in Firebase account. Configure Firebase before enabling sign-in.</p></div>
+      </section>
+    </main>
+    <footer><span>BUNKER</span><span>Your space, your pace.</span></footer>
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

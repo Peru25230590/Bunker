@@ -1,0 +1,35 @@
+{
+  "name": "bunker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch scripts/serve.js",
+    "start": "node scripts/serve.js",
+    "database:init": "node database/init-database.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "firebase": "^13.0.0",
+    "firebase-admin": "^14.5.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4"
+  },
+  "description": "BUNKER is a small vanilla HTML, CSS and JavaScript app organized around Firebase Authentication and Realtime Database. The local pages work without a framework; cloud sign-in and notes remain disabled until you configure your own Firebase project.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Peru25230590/Bunker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Peru25230590/Bunker/issues"
+  },
+  "homepage": "https://github.com/Peru25230590/Bunker#readme"
+}
