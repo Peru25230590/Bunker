@@ -1,0 +1,39 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "runtime": "nodejs22",
+      "ignore": ["node_modules", ".git", "test", "*.test.js"]
+    }
+  ],
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "**/.*",
+      "firebase.json",
+      "database.rules.json",
+      ".firebaserc*",
+      ".git/**",
+      ".gitignore",
+      "functions/**",
+      "README.md",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "/firebase-messaging-sw.js",
+        "headers": [{ "key": "Service-Worker-Allowed", "value": "/" }]
+      }
+    ]
+  },
+  "emulators": {
+    "auth": { "port": 9099 },
+    "database": { "port": 9000 },
+    "functions": { "port": 5001 },
+    "ui": { "enabled": true, "port": 4000 }
+  }
+}

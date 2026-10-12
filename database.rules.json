@@ -1,0 +1,62 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "events": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$eventId": {
+          ".write": false,
+          ".validate": "newData.hasChildren(['id', 'userId', 'title', 'startsAt', 'status', 'timeZone', 'createdAt', 'updatedAt', 'scheduleRevision'])",
+          "id": { ".validate": "newData.val() === $eventId" },
+          "userId": { ".validate": "newData.val() === $uid" },
+          "title": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 160" },
+          "description": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)" },
+          "startsAt": { ".validate": "newData.isNumber() && newData.val() > 0" },
+          "status": { ".validate": "newData.val() === 'scheduled' || newData.val() === 'completed' || newData.val() === 'cancelled'" },
+          "timeZone": { ".validate": "newData.isString() && newData.val().length <= 80" },
+          "createdAt": { ".validate": "newData.isNumber()" },
+          "updatedAt": { ".validate": "newData.isNumber()" },
+          "scheduleRevision": { ".validate": "newData.isString() && newData.val().length <= 100" },
+          "$other": { ".validate": false }
+        }
+      }
+    },
+    "preferences": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "remindersEnabled": { ".validate": "newData.isBoolean()" },
+        "reminder1Day": { ".validate": "newData.isBoolean()" },
+        "reminder2Days": { ".validate": "newData.isBoolean()" },
+        "pushEnabled": { ".validate": "newData.isBoolean()" },
+        "catSoundsEnabled": { ".validate": "newData.isBoolean()" },
+        "theme": { ".validate": "newData.val() === 'light' || newData.val() === 'dark'" },
+        "timeZone": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 80" },
+        "$other": { ".validate": false }
+      }
+    },
+    "pushTokens": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "$tokenId": {
+          ".validate": "newData.hasChildren(['token', 'createdAt'])",
+          "token": { ".validate": "newData.isString() && newData.val().length >= 20 && newData.val().length <= 4096" },
+          "createdAt": { ".validate": "newData.isNumber()" },
+          "$other": { ".validate": false }
+        }
+      }
+    },
+    "notifications": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": false
+      }
+    },
+    "reminders": { ".read": false, ".write": false },
+    "reminderQueue": { ".read": false, ".write": false, ".indexOn": ["scheduledAt"] },
+    "pushDeliveries": { ".read": false, ".write": false },
+    "eventScheduleMeta": { ".read": false, ".write": false }
+  }
+}

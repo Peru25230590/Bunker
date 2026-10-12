@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff8fa" />
+    <title>BUNKER | A quieter place for your ideas</title>
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem("bunker-theme");
+          const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.dataset.theme = theme;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="app">
+      <section class="auth-screen" id="auth-screen" aria-labelledby="auth-title">
+        <div class="auth-topbar">
+          <a class="wordmark wordmark-small" href="#" aria-label="Bunker home"><span class="brand-flower" aria-hidden="true">✿</span> BUNKER</a>
+          <button class="icon-button theme-toggle" type="button" aria-label="Switch theme" title="Switch theme"><span class="theme-glyph" aria-hidden="true"></span></button>
+        </div>
+        <div class="auth-content">
+          <div class="auth-brand">
+            <span class="brand-flower brand-flower-large" aria-hidden="true">✿</span>
+            <p class="eyebrow">YOUR PERSONAL KNOWLEDGE SPACE</p>
+            <h1 id="auth-title">A quieter place<br />for your ideas.</h1>
+            <p class="auth-subtitle">Gather what matters. Find it when you need it.</p>
+          </div>
+          <form class="login-form" id="login-form">
+            <div class="form-heading">
+              <h2>Welcome back</h2>
+              <p>Sign in to return to your library.</p>
+            </div>
+            <label class="field-label" for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="username" placeholder="you@example.com" required />
+            <label class="field-label" for="password">Password</label>
+            <div class="password-wrap">
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="4" />
+              <button class="password-toggle" type="button" aria-label="Show password">Show</button>
+            </div>
+            <p class="auth-error" id="auth-error" role="alert" hidden></p>
+            <button class="button button-primary login-button" type="submit"><span>Enter your library</span><span aria-hidden="true">→</span></button>
+            <button class="quiet-link auth-signup" id="signup-button" type="button" hidden>Create an account</button>
+            <p class="demo-note">Local preview · any valid email and 4+ character password</p>
+          </form>
+        </div>
+        <p class="auth-footer">A little room to think, every day.</p>
+        <div class="petals petals-auth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </section>
+
+      <section class="workspace" id="workspace" hidden>
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar-brand"><a class="wordmark" href="#"><span class="brand-flower" aria-hidden="true">✿</span> BUNKER</a><button class="icon-button sidebar-collapse" id="sidebar-collapse" type="button" aria-label="Collapse sidebar" title="Collapse sidebar"><span aria-hidden="true">‹</span></button></div>
+          <button class="workspace-switcher" type="button"><span class="workspace-avatar">B</span><span class="workspace-label"><strong>My workspace</strong><small>Personal library</small></span><span class="switcher-arrow" aria-hidden="true">⌄</span></button>
+          <nav class="primary-nav" aria-label="Main navigation">
+            <button class="nav-item active" data-view="overview" type="button"><span class="nav-icon" aria-hidden="true">⌂</span><span>Overview</span></button>
+            <button class="nav-item" data-view="calendar" type="button"><span class="nav-icon" aria-hidden="true">▦</span><span>Calendar</span></button>
+            <button class="nav-item" data-view="notes" type="button"><span class="nav-icon" aria-hidden="true">▤</span><span>All notes</span><span class="nav-count" id="nav-note-count">0</span></button>
+            <button class="nav-item" data-view="favorites" type="button"><span class="nav-icon" aria-hidden="true">☆</span><span>Favorites</span></button>
+            <button class="nav-item" data-view="recent" type="button"><span class="nav-icon" aria-hidden="true">◷</span><span>Recently opened</span></button>
+          </nav>
+          <div class="sidebar-section"><div class="section-label"><span>YOUR COLLECTIONS</span><button class="text-icon" id="add-collection" type="button" aria-label="Add collection" title="Add collection">+</button></div><div id="collection-list" class="collection-list"></div></div>
+          <div class="sidebar-bottom"><div class="storage-caption"><span>Library storage</span><span>12%</span></div><div class="storage-track"><span></span></div><button class="nav-item settings-item" type="button" data-view="settings"><span class="nav-icon" aria-hidden="true">⚙</span><span>Settings</span></button></div>
+        </aside>
+
+        <div class="main-column">
+          <header class="topbar">
+            <button class="icon-button mobile-menu" id="mobile-menu" type="button" aria-label="Open navigation"><span aria-hidden="true">☰</span></button>
+            <div class="breadcrumb"><span>My workspace</span><span aria-hidden="true">/</span><strong id="breadcrumb-current">Overview</strong></div>
+            <div class="topbar-actions">
+              <label class="search-box" for="library-search"><span aria-hidden="true">⌕</span><input id="library-search" type="search" placeholder="Search your library..." autocomplete="off" /><kbd>⌘ K</kbd></label>
+              <button class="utility-button" id="web-search" type="button"><span aria-hidden="true">↗</span><span>Web lookup</span></button>
+              <button class="utility-button" id="image-search" type="button"><span aria-hidden="true">▧</span><span>Images</span></button>
+              <div class="notification-wrap">
+                <button class="icon-button notification-button" id="notifications-button" type="button" aria-label="Notifications" aria-expanded="false" title="Notifications"><span aria-hidden="true">&#x1F514;</span><span class="notification-count" id="notification-count" hidden>0</span></button>
+                <section class="notification-panel" id="notification-panel" aria-label="Notifications" hidden>
+                  <div class="notification-heading"><div><strong>Notifications</strong><span id="notification-subtitle">Your upcoming plans</span></div><button class="quiet-link" id="mark-all-read" type="button">Mark all read</button></div>
+                  <div class="notification-list" id="notification-list"></div>
+                </section>
+              </div>
+              <button class="icon-button theme-toggle" type="button" aria-label="Switch theme" title="Switch theme"><span class="theme-glyph" aria-hidden="true"></span></button>
+              <button class="profile-button" id="profile-button" type="button" aria-label="Profile menu"><span class="profile-avatar" id="profile-avatar">A</span><span class="profile-chevron" aria-hidden="true">⌄</span></button>
+              <div class="profile-menu" id="profile-menu" hidden><div class="profile-menu-user"><strong id="profile-name">Ari Morgan</strong><span id="profile-email">hello@example.com</span></div><button type="button" id="logout-button">Sign out <span aria-hidden="true">↗</span></button></div>
+            </div>
+          </header>
+
+          <div class="page-content">
+            <div id="dashboard-view">
+            <section class="welcome-row">
+              <div><p class="eyebrow" id="today-label">MONDAY, OCTOBER 12</p><h1 id="welcome-title">Good morning, Ari<span class="welcome-flower" aria-hidden="true">✿</span></h1><p class="welcome-copy">A clear space for everything you’re collecting.</p></div>
+              <button class="button button-primary new-note-button" id="new-note" type="button"><span aria-hidden="true">＋</span> New note</button>
+            </section>
+
+            <section class="stats-grid" aria-label="Library statistics">
+              <article class="stat-card"><div class="stat-top"><span>NOTES</span><span class="stat-icon stat-icon-rose" aria-hidden="true">▤</span></div><strong id="stat-notes">0</strong><small><span class="stat-dot"></span> In your library</small></article>
+              <article class="stat-card"><div class="stat-top"><span>COLLECTIONS</span><span class="stat-icon stat-icon-lilac" aria-hidden="true">▦</span></div><strong id="stat-collections">4</strong><small><span class="stat-dot"></span> Thoughtfully gathered</small></article>
+              <article class="stat-card"><div class="stat-top"><span>RESOURCES</span><span class="stat-icon stat-icon-peach" aria-hidden="true">↗</span></div><strong id="stat-resources">0</strong><small><span class="stat-dot"></span> Links &amp; documents</small></article>
+              <article class="stat-card stat-card-last"><div class="stat-top"><span>ADDED THIS WEEK</span><span class="stat-icon stat-icon-green" aria-hidden="true">⌁</span></div><strong id="stat-week">0</strong><small><span class="stat-dot"></span> Keep the ideas coming</small></article>
+            </section>
+
+            <section class="library-section" aria-labelledby="recent-heading">
+              <div class="section-heading"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2 id="recent-heading">Recently opened</h2></div><button class="quiet-link" data-view="recent" type="button">View all <span aria-hidden="true">→</span></button></div>
+              <div class="recent-grid" id="recent-grid"></div>
+            </section>
+
+            <section class="library-section pinned-section" aria-labelledby="pinned-heading">
+              <div class="section-heading"><div><p class="eyebrow">KEEP CLOSE</p><h2 id="pinned-heading">Pinned for later</h2></div><button class="quiet-link" data-view="favorites" type="button">All favorites <span aria-hidden="true">→</span></button></div>
+              <div class="pinned-list" id="pinned-list"></div>
+            </section>
+            <footer class="page-footer"><span>Made for the things worth remembering.</span><span class="footer-flower" aria-hidden="true">✿</span></footer>
+            </div>
+            <section class="calendar-view" id="calendar-view" hidden>
+              <div class="section-heading calendar-heading"><div><p class="eyebrow">MAKE SPACE FOR WHAT'S NEXT</p><h1>Calendar</h1></div><button class="button button-primary new-event-button" id="new-event" type="button"><span aria-hidden="true">＋</span> New event</button></div>
+              <p class="backend-note" id="calendar-backend-note">Connect this app to Firebase to create events and schedule reminders. This preview does not schedule events locally.</p>
+              <div class="calendar-list" id="calendar-list"></div>
+            </section>
+          </div>
+        </div>
+        <button class="fab" id="fab" type="button" aria-label="Create or upload" title="Create or upload">＋</button>
+        <div class="fab-menu" id="fab-menu" hidden><button type="button" data-action="note"><span>＋</span> New note</button><button type="button" data-action="upload"><span>↑</span> Upload a file</button></div>
+        <input type="file" id="file-input" hidden multiple />
+        <div class="mobile-scrim" id="mobile-scrim" hidden></div>
+      </section>
+
+      <section class="logout-screen" id="logout-screen" hidden aria-live="polite"><span class="brand-flower brand-flower-large" aria-hidden="true">✿</span><a class="wordmark" href="#"><span class="brand-flower" aria-hidden="true">✿</span> BUNKER</a><p>Until next time.</p><div class="petals" aria-hidden="true"><i></i><i></i><i></i><i></i></div></section>
+      <dialog class="app-dialog" id="app-dialog" aria-labelledby="dialog-title"><form method="dialog" class="dialog-shell" id="dialog-form"><button class="dialog-close icon-button" type="button" aria-label="Close dialog">×</button><p class="eyebrow" id="dialog-eyebrow">YOUR LIBRARY</p><h2 id="dialog-title">Create a note</h2><div id="dialog-body"></div></form></dialog>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </main>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+    <script type="module" src="firebase-client.js"></script>
+  </body>
+</html>

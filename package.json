@@ -1,0 +1,9 @@
+{
+  "name": "bunker-static",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "npm --prefix functions test",
+    "lint": "node --check app.js && node --check firebase-client.js && npm --prefix functions run lint"
+  }
+}
