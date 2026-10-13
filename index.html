@@ -3,29 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fff8fa" />
+    <meta name="theme-color" content="#0b0b0f" />
     <title>BUNKER | A quieter place for your ideas</title>
     <script>
       (() => {
         try {
           const saved = localStorage.getItem("bunker-theme");
-          const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          const theme = saved || "dark";
           document.documentElement.dataset.theme = theme;
         } catch {
           document.documentElement.dataset.theme = "light";
         }
       })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="css/bunker_logo.png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/cats.css" />
   </head>
   <body>
     <main id="app">
       <section class="auth-screen" id="auth-screen" aria-labelledby="auth-title">
         <div class="auth-topbar">
-          <a class="wordmark wordmark-small" href="#" aria-label="Bunker home"><span class="brand-flower" aria-hidden="true">✿</span> BUNKER</a>
+          <a class="wordmark wordmark-small" href="./index.html" aria-label="Bunker home"><img class="brand-logo" src="css/bunker_logo.png" alt="BUNKER logo" width="48" height="48" /> BUNKER</a>
           <button class="icon-button theme-toggle" type="button" aria-label="Switch theme" title="Switch theme"><span class="theme-glyph" aria-hidden="true"></span></button>
         </div>
         <div class="auth-content">
@@ -50,6 +49,7 @@
             <p class="auth-error" id="auth-error" role="alert" hidden></p>
             <button class="button button-primary login-button" type="submit"><span>Enter your library</span><span aria-hidden="true">→</span></button>
             <button class="quiet-link auth-signup" id="signup-button" type="button" hidden>Create an account</button>
+            <a class="auth-signup auth-register" href="./register.html">Create an account</a>
             <p class="demo-note">Local preview · any valid email and 4+ character password</p>
           </form>
         </div>
@@ -59,7 +59,7 @@
 
       <section class="workspace" id="workspace" hidden>
         <aside class="sidebar" id="sidebar">
-          <div class="sidebar-brand"><a class="wordmark" href="#"><span class="brand-flower" aria-hidden="true">✿</span> BUNKER</a><button class="icon-button sidebar-collapse" id="sidebar-collapse" type="button" aria-label="Collapse sidebar" title="Collapse sidebar"><span aria-hidden="true">‹</span></button></div>
+          <div class="sidebar-brand"><a class="wordmark" href="./index.html"><img class="brand-logo" src="css/bunker_logo.png" alt="BUNKER logo" width="48" height="48" /> BUNKER</a><button class="icon-button sidebar-collapse" id="sidebar-collapse" type="button" aria-label="Collapse sidebar" title="Collapse sidebar"><span aria-hidden="true">‹</span></button></div>
           <button class="workspace-switcher" type="button"><span class="workspace-avatar">B</span><span class="workspace-label"><strong>My workspace</strong><small>Personal library</small></span><span class="switcher-arrow" aria-hidden="true">⌄</span></button>
           <nav class="primary-nav" aria-label="Main navigation">
             <button class="nav-item active" data-view="overview" type="button"><span class="nav-icon" aria-hidden="true">⌂</span><span>Overview</span></button>
@@ -132,12 +132,13 @@
         <div class="mobile-scrim" id="mobile-scrim" hidden></div>
       </section>
 
-      <section class="logout-screen" id="logout-screen" hidden aria-live="polite"><span class="brand-flower brand-flower-large" aria-hidden="true">✿</span><a class="wordmark" href="#"><span class="brand-flower" aria-hidden="true">✿</span> BUNKER</a><p>Until next time.</p><div class="petals" aria-hidden="true"><i></i><i></i><i></i><i></i></div></section>
+      <section class="logout-screen" id="logout-screen" hidden aria-live="polite"><span class="brand-flower brand-flower-large" aria-hidden="true">✿</span><a class="wordmark" href="./index.html"><img class="brand-logo" src="css/bunker_logo.png" alt="BUNKER logo" width="48" height="48" /> BUNKER</a><p>Until next time.</p><div class="petals" aria-hidden="true"><i></i><i></i><i></i><i></i></div></section>
       <dialog class="app-dialog" id="app-dialog" aria-labelledby="dialog-title"><form method="dialog" class="dialog-shell" id="dialog-form"><button class="dialog-close icon-button" type="button" aria-label="Close dialog">×</button><p class="eyebrow" id="dialog-eyebrow">YOUR LIBRARY</p><h2 id="dialog-title">Create a note</h2><div id="dialog-body"></div></form></dialog>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </main>
     <script src="firebase-config.js"></script>
     <script src="app.js"></script>
     <script type="module" src="firebase-client.js"></script>
+    <script src="./js/cats.js" defer></script>
   </body>
 </html>

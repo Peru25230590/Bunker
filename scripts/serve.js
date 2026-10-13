@@ -11,6 +11,9 @@ const types = new Map([
   [".css", "text/css; charset=utf-8"],
   [".js", "text/javascript; charset=utf-8"],
   [".json", "application/json; charset=utf-8"],
+  [".png", "image/png"],
+  [".svg", "image/svg+xml"],
+  [".ico", "image/x-icon"],
 ]);
 
 const server = createServer(async (request, response) => {
@@ -26,13 +29,16 @@ const server = createServer(async (request, response) => {
     return;
   }
   const requestedPath = pathname === "/" ? "/index.html" : pathname;
-  if (!/^\/(?:index\.html|vault\.html|login\.html|register\.html|css\/[\w.-]+|js\/[\w.-]+)$/.test(requestedPath)) {
+  const isRootAsset = /^\/(?:index\.html|vault\.html|login\.html|register\.html|styles\.css|app\.js|firebase-config\.js|firebase-client\.js|firebase-messaging-sw\.js)$/.test(requestedPath);
+  const isStaticAsset = /^\/(?:css|js)(?:\/[A-Za-z0-9_-][\w.-]*)+$/.test(requestedPath);
+  if (!isRootAsset && !isStaticAsset) {
     response.writeHead(404).end("Not found");
     return;
   }
   const filePath = path.resolve(root, `.${requestedPath}`);
   try {
-    if (!filePath.startsWith(`${root}${path.sep}`) || !(await stat(filePath)).isFile()) throw new Error("Not found");
+    const relativePath = path.relative(root, filePath);
+    if (!relativePath || relativePath.startsWith(`..${path.sep}`) || relativePath === ".." || path.isAbsolute(relativePath) || !(await stat(filePath)).isFile()) throw new Error("Not found");
   } catch {
     response.writeHead(404).end("Not found");
     return;

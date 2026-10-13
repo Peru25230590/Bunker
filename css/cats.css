@@ -1,0 +1,103 @@
+#bunker-cats {
+  position: fixed;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#bunker-cats[hidden] { display: none; }
+.bunker-cat-layer { position: absolute; inset: 0; pointer-events: none; }
+.bunker-cat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5rem;
+  height: 4.75rem;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  will-change: transform;
+}
+.bunker-cat:active { cursor: grabbing; }
+.cat-art { display: block; width: 100%; height: 100%; overflow: visible; }
+.cat-body, .cat-head { fill: var(--cat-cream); stroke: var(--cat-outline); stroke-width: 2.5; }
+.cat-muzzle { fill: var(--cat-muzzle); }
+.cat-ear-inner { fill: var(--cat-pink); transition: transform 180ms ease; transform-origin: center; }
+.cat-face { fill: none; stroke: var(--cat-face); stroke-linecap: round; stroke-width: 2.2; }
+.cat-whiskers { fill: none; stroke: var(--cat-whisker); stroke-linecap: round; stroke-width: 1.5; }
+.cat-blush { fill: none; stroke: var(--cat-blush); stroke-linecap: round; stroke-width: 3; }
+.cat-stripe { fill: none; stroke: var(--cat-stripe); stroke-linecap: round; stroke-width: 2.3; }
+.cat-tail { fill: none; stroke: var(--cat-cream); stroke-linecap: round; stroke-width: 7; transform-origin: 72px 49px; animation: bunker-cat-tail 1.4s ease-in-out infinite alternate; }
+.cat-leg { fill: none; stroke: var(--cat-outline); stroke-linecap: round; stroke-width: 5; transform-origin: center top; }
+.cat-leg-front { stroke: var(--cat-cream); }
+.bunker-cat-ginger { --cat-cream: var(--cat-ginger); --cat-outline: var(--cat-ginger-outline); --cat-stripe: var(--cat-ginger-outline); --cat-blush: var(--cat-pink); }
+.bunker-cat-silver { --cat-cream: var(--cat-silver); --cat-outline: var(--cat-silver-outline); --cat-stripe: var(--cat-silver-outline); --cat-blush: var(--cat-pink); }
+.bunker-cat-tuxedo { --cat-cream: var(--cat-tuxedo); --cat-outline: var(--cat-tuxedo-rim); --cat-face: var(--cat-white); --cat-whisker: var(--cat-white); --cat-muzzle: var(--cat-white); --cat-stripe: var(--cat-tuxedo-rim); --cat-blush: var(--cat-pink); }
+.bunker-cat-cream { --cat-cream: var(--cat-white); --cat-outline: var(--cat-cream-outline); --cat-stripe: var(--cat-cream-outline); --cat-blush: var(--cat-pink); }
+.bunker-cat:not(.bunker-cat-tuxedo) { --cat-face: var(--cat-face-default); --cat-whisker: var(--cat-face-default); --cat-muzzle: var(--cat-muzzle); }
+.is-curious .cat-ear-inner { transform: translateY(-2px) rotate(-5deg); }
+.cat-heart {
+  position: absolute;
+  top: -.1rem;
+  left: 50%;
+  color: var(--accent-strong);
+  font-size: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, .5rem) scale(.6);
+}
+.cat-heart.is-visible { animation: bunker-cat-heart 900ms ease-out both; }
+.is-jumping .cat-figure { animation: bunker-cat-jump 550ms ease-out; }
+.bunker-cat[data-state="walk"] .cat-leg-front { animation: bunker-cat-step 360ms ease-in-out infinite alternate; }
+.bunker-cat[data-state="walk"] .cat-leg-back { animation: bunker-cat-step 360ms ease-in-out infinite alternate-reverse; }
+.bunker-cat[data-state="walk"] .cat-figure { animation: bunker-cat-bob 620ms ease-in-out infinite alternate; }
+.bunker-cat[data-state="run"] .cat-leg { animation: bunker-cat-step 150ms ease-in-out infinite alternate; }
+.bunker-cat[data-state="run"] .cat-figure { animation: bunker-cat-bob 230ms ease-in-out infinite alternate; }
+.bunker-cat[data-state="sit"] .cat-figure { transform: translateY(5px) scale(.96, 1.02); }
+.bunker-cat[data-state="groom"] .cat-head { transform: rotate(12deg) translate(3px, 3px); transform-origin: 48px 43px; animation: bunker-cat-groom 650ms ease-in-out infinite alternate; }
+.bunker-cat[data-state="roll"] .cat-figure { animation: bunker-cat-roll 1.1s ease-in-out; }
+.bunker-cat[data-state="sleep"] .cat-figure { transform: translateY(7px) scale(1.02, .9); animation: bunker-cat-sleep 1.7s ease-in-out infinite; }
+.bunker-cat[data-state="sleep"] .cat-face { opacity: .45; }
+.bunker-cat[data-state="held"] .cat-leg { animation: bunker-cat-dangle 500ms ease-in-out infinite alternate; }
+.bunker-cats-toggle {
+  position: fixed;
+  z-index: 7;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  left: max(1rem, env(safe-area-inset-left));
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-2);
+  box-shadow: var(--shadow-lift);
+  color: var(--accent-strong);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+.bunker-cats-toggle:hover { border-color: var(--accent); background: var(--hover); }
+.bunker-cats-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+@keyframes bunker-cat-step { to { transform: rotate(24deg); } }
+@keyframes bunker-cat-bob { to { transform: translateY(-3px); } }
+@keyframes bunker-cat-tail { to { transform: rotate(17deg); } }
+@keyframes bunker-cat-groom { to { transform: rotate(-5deg) translate(-2px, 2px); } }
+@keyframes bunker-cat-roll { 50% { transform: rotate(180deg) scale(.92); } to { transform: rotate(360deg); } }
+@keyframes bunker-cat-sleep { 50% { transform: translateY(4px) scale(1.03, .88); } }
+@keyframes bunker-cat-dangle { to { transform: rotate(22deg); } }
+@keyframes bunker-cat-jump { 45% { transform: translateY(-.7rem) rotate(-5deg); } to { transform: translateY(0); } }
+@keyframes bunker-cat-heart { 15% { opacity: 1; } to { opacity: 0; transform: translate(-50%, -1.8rem) scale(1.1); } }
+
+@media (max-width: 480px) {
+  .bunker-cat { width: 4.5rem; height: 4.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bunker-cat, .bunker-cat *, .bunker-cats-toggle { animation: none !important; transition: none !important; }
+  .bunker-cat[data-state="walk"] .cat-figure, .bunker-cat[data-state="run"] .cat-figure { transform: none; }
+}

@@ -66,6 +66,7 @@ document.addEventListener("submit", async (event) => {
       await auth.register(data.get("email"), data.get("password"), data.get("displayName"));
       showNotice("Account created. Check your email to verify your address, then sign in.");
       form.reset();
+      location.assign("./vault.html");
     } else if (form.dataset.form === "login") {
       await auth.signIn(data.get("email"), data.get("password"));
       location.assign("./vault.html");
@@ -89,7 +90,7 @@ document.addEventListener("click", async (event) => {
   try {
     if (button.dataset.action === "sign-out") {
       await auth.signOut();
-      location.assign("./vault.html");
+      location.assign("./login.html");
     } else if (button.dataset.action === "reset-password") {
       const email = document.querySelector('input[name="email"]')?.value;
       await auth.resetPassword(email);
@@ -106,13 +107,33 @@ document.addEventListener("click", async (event) => {
 });
 
 async function start() {
+  const isVaultPage = location.pathname.endsWith("/vault.html");
+  const isAuthPage = location.pathname.endsWith("/login.html") || location.pathname.endsWith("/register.html");
   if (!firebaseConfigured()) {
+    try {
+      const previewUser = JSON.parse(sessionStorage.getItem("bunker-session"));
+      if (previewUser?.email && (isVaultPage || isAuthPage)) {
+        location.replace("./index.html");
+        return;
+      }
+    } catch {
+      // Continue to the Firebase setup message when no preview session is available.
+    }
     showSignedInState(null);
     showNotice("Firebase setup required: add your Web App settings in js/firebase.js and enable Email/Password Authentication.", true);
+    if (isVaultPage) location.replace("./login.html");
     return;
   }
   try {
     await auth.watchAuth(async (user) => {
+      if (user && isAuthPage) {
+        location.replace("./vault.html");
+        return;
+      }
+      if (!user && isVaultPage) {
+        location.replace("./login.html");
+        return;
+      }
       currentUser = user;
       showSignedInState(user);
       if (noteList && user) {

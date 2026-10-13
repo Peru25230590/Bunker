@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebasedatabase.app wss://*.firebasedatabase.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <link rel="icon" type="image/png" href="css/bunker_logo.png">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/cats.css">
     <title>Sign in — BUNKER</title>
   </head>
   <body class="auth-page">
     <main class="auth-card">
-      <a class="brand" href="./vault.html"><span class="brand-icon">B</span><span>BUNKER<small>your personal vault</small></span></a>
+      <a class="brand" href="./index.html"><img class="brand-logo" src="css/bunker_logo.png" alt="BUNKER logo" width="48" height="48"><span>BUNKER<small>your personal vault</small></span></a>
       <p class="eyebrow">WELCOME BACK</p>
       <h1>Sign in</h1>
       <p class="lede">Your quiet corner is right where you left it.</p>
@@ -23,8 +25,9 @@
       </form>
       <p class="notice" data-notice role="status"></p>
       <p class="auth-switch">New to BUNKER? <a href="./register.html">Create an account</a></p>
-      <a class="back-link" href="./vault.html">← Back to BUNKER</a>
+      <a class="back-link" href="./index.html">← Back to BUNKER</a>
     </main>
     <script type="module" src="./js/app.js"></script>
+    <script src="./js/cats.js" defer></script>
   </body>
 </html>
