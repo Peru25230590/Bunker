@@ -57,6 +57,25 @@
     "reminders": { ".read": false, ".write": false },
     "reminderQueue": { ".read": false, ".write": false, ".indexOn": ["scheduledAt"] },
     "pushDeliveries": { ".read": false, ".write": false },
-    "eventScheduleMeta": { ".read": false, ".write": false }
+    "eventScheduleMeta": { ".read": false, ".write": false },
+    "users": {
+      "$uid": {
+        "profile": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.hasChildren(['uid', 'email', 'displayName', 'createdAt', 'updatedAt']) && newData.child('uid').val() === $uid && newData.child('email').isString() && newData.child('email').val().length <= 320 && newData.child('displayName').isString() && newData.child('displayName').val().length <= 50 && newData.child('createdAt').isString() && newData.child('updatedAt').isString()",
+          "$other": { ".validate": "false" }
+        },
+        "notes": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          "$noteId": {
+            ".validate": "newData.hasChildren(['id', 'title', 'content', 'createdAt', 'updatedAt']) && newData.child('id').val() === $noteId && newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('title').val().length <= 120 && newData.child('content').isString() && newData.child('content').val().length <= 10000 && newData.child('createdAt').isString() && newData.child('updatedAt').isString() && (!newData.child('tags').exists() || newData.child('tags').numChildren() <= 20)",
+            "$other": { ".validate": "false" }
+          }
+        },
+        "$other": { ".read": false, ".write": false, ".validate": "false" }
+      }
+    }
   }
 }
